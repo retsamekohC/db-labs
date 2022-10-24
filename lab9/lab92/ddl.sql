@@ -139,3 +139,28 @@ alter table network_interface
     add constraint r_12 foreign key (computer_id) references computer (computer_id)
         on delete no action
         on update no action;
+
+create table comp_user_many_to_many
+(
+    computer_name text constraint comp_fk references computer(computer_name),
+    user_name text constraint user_fk references computer_user(user_first_name)
+);
+
+create table comp_os_many_to_many(
+    computer_name text constraint comp_fk references computer(computer_name),
+    os_name text constraint os_fk references os
+);
+
+create table comp_hdd_many_to_many(
+    computer_name text constraint comp_fk references computer(computer_name),
+    hdd_name text constraint disk_fk references hard_drive(hdd_model_full_name)
+);
+
+alter table hard_drive
+    add constraint hdd_unique unique (hdd_model_full_name);
+
+alter table computer
+    add constraint comp_name_unique unique (computer_name);
+
+alter table computer_user
+    add constraint user_name_unique unique (user_first_name);
